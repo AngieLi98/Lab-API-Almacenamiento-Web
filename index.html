@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buscador de Pokémon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Buscador de Pokémon</h1>
+    <input type="text" id="pokemonName" placeholder="Ingresa el nombre de un Pokémon">
+    <button onclick="searchPokemon()">Buscar</button>
+    <div id="pokemon-info"></div>
+
+    <h2>Resultado:</h2>
+
+    <div id="resultado"></div>
+    <button onclick="saveFavorite()">Guardar como favorito</button>
+    <button onclick="updateFavoritesList()">Borrar favoritos</button>
+    <h2>Favoritos:</h2>
+    <div id="favoritos"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
