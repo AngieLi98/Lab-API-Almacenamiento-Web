@@ -1,0 +1,114 @@
+body {
+    background: #239089;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    color: #ffcb05;
+    font-size: 45px;
+}
+
+.buscador input {
+    padding: 10px;
+    width: 400px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+}
+
+.buscador button {
+    padding: 10px 15px;
+    background: #ff0707;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+#btnFav, #btnBorrarTodo {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #ffcb05;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: black;
+    border-radius: 5px;
+}
+
+#btnBorrarTodo {
+    background: #ff4747;
+    color: white;
+}
+
+#btnFav:hover {
+    background: #ff9305;
+}
+
+#btnBorrarTodo:hover {
+    background: #970000;
+}
+
+.card {
+    border: 5px solid #d4fa00;
+    background-color: black;
+    color: white;
+    margin-top: 20px;
+}
+
+.card h3 {
+    font-size: 40px;
+    margin: 20px;
+}
+
+.card img {
+    width: 150px;
+}
+
+h2 {
+    font-size: 40px;
+    text-align: left;
+    background-color: #ffcb05;
+    padding-left: 20px;
+}
+
+.favoritos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.favoritos div {
+    margin: 10px;
+    padding: 10px;
+    background: black;
+    border: 5px solid #d4fa00;
+    border-radius: 10px;
+    width: 140px;
+    color: white;
+}
+
+.favoritos p {
+    font-size: 25px;
+    margin: 10px;
+}
+
+.favoritos img {
+    width: 150px;
+}
+
+.btnEliminar {
+    background: #ff4747;
+    color: white;
+    border: none;
+    padding: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btnEliminar:hover {
+    background: #970000;
+}
