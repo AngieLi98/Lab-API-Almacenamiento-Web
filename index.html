@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
-    <title>Buscador de Pokémon</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeFinder</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Buscador de Pokémon</h1>
-    <input type="text" id="pokemonName" placeholder="Ingresa el nombre de un Pokémon">
-    <button onclick="searchPokemon()">Buscar</button>
-    <div id="pokemon-info"></div>
-
-    <h2>Resultado:</h2>
-
-    <div id="resultado"></div>
-    <button onclick="saveFavorite()">Guardar como favorito</button>
-    <button onclick="updateFavoritesList()">Borrar favoritos</button>
-    <h2>Favoritos:</h2>
-    <div id="favoritos"></div>
-
+    <h1>PokeFinder</h1>
+    <div class="buscador">
+        <input type="text" id="pokemonInput" placeholder="Escribe un Pokémon...">
+        <button onclick="searchPokemon()">Buscar</button>
+    </div>
+    <div id="resultado" class="card"></div>
+    <button id="btnFav" onclick="saveFavorite()" disabled>Guardar en favoritos</button>
+    <h2>Favoritos</h2>
+    <button id="btnBorrarTodo" onclick="clearAllFavorites()">Borrar todos</button>
+    <div id="favoritos" class="favoritos"></div>
     <script src="script.js"></script>
 </body>
 

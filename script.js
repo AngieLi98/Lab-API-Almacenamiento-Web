@@ -1,58 +1,78 @@
-const pokemonNameInput = document.getElementById('pokemonName');
-const pokemonInfoDiv = document.getElementById('pokemon-info');
+let currentPokemon = null;
 
-async function searchPokemon() {
-    const pokemonName = pokemonNameInput.value.toLowerCase();
-    pokemonInfoDiv.innerHTML = ''; // Limpia la información anterior
+// Buscar Pokémon
+function searchPokemon() {
+    const name = document.getElementById("pokemonInput").value.toLowerCase();
 
-    if (!pokemonName) {
-        pokemonInfoDiv.innerHTML = '<p>Por favor, ingresa un nombre de Pokémon.</p>';
-        return;
-    }
+    fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+    .then(res => {
+        if (!res.ok) throw new Error("No encontrado");
+        return res.json();
+    })
+    .then(data => {
+        currentPokemon = {
+            name: data.name,
+            img: data.sprites.front_default
+        };
 
-    try {
-        // Realiza la petición a la PokeAPI
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+        document.getElementById("resultado").innerHTML = `
+            <h3>${currentPokemon.name}</h3>
+            <img src="${currentPokemon.img}">
+        `;
 
-        // Verifica si la petición fue exitosa (código 200)
-        if (!response.ok) {
-            throw new Error(`Pokémon no encontrado: ${response.statusText}`);
-        }
-
-        // Convierte la respuesta a JSON
-        const data = await response.json();
-
-        // Crea los elementos para mostrar la información
-        const name = document.createElement('h2');
-        name.textContent = data.name.toUpperCase();
-
-        const image = document.createElement('img');
-        image.src = data.sprites.other['official-artwork'].front_default;
-        image.alt = data.name;
-
-        // Agrega los elementos al div de información
-        pokemonInfoDiv.appendChild(name);
-        pokemonInfoDiv.appendChild(image);
-
-    } catch (error) {
-        pokemonInfoDiv.innerHTML = `<p>Error al buscar el Pokémon: ${error.message}</p>`;
-        console.error('Hubo un problema con la petición fetch:', error);
-    }
+        document.getElementById("btnFav").disabled = false;
+    })
+    .catch(() => {
+        alert("Pokemon no encontrado");
+        currentPokemon = null;
+        document.getElementById("btnFav").disabled = true;
+        document.getElementById("resultado").innerHTML = "";
+    });
 }
 
+// Guardar favorito
 function saveFavorite() {
-    if (!currentPokemon) {
-        alert("Primero busca un Pokémon.");
-        return;
-    }
-    let favorites = JSON.parse(localStorage.getItem("favoritos")) || [];
-    // Evitar duplicados
-    const exists = favorites.some(p => p.name === currentPokemon.name);
-    if (exists) {
-        alert("Este Pokémon ya está en favoritos.");
-        return;
-    }
-    favorites.push(currentPokemon);
-    localStorage.setItem("favoritos", JSON.stringify(favorites));
+    if (!currentPokemon) return;
+    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    const existe = favoritos.some(p => p.name === currentPokemon.name);
+    if (!existe) favoritos.push(currentPokemon);
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
     updateFavoritesList();
 }
+
+// Eliminar un favorito
+function deleteFavorite(name) {
+    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+    favoritos = favoritos.filter(p => p.name !== name);
+
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+
+    updateFavoritesList();
+}
+
+// Borrar todos los favoritos
+function clearAllFavorites() {
+    localStorage.removeItem("favoritos");
+    updateFavoritesList();
+}
+
+// Mostrar favoritos
+function updateFavoritesList() {
+    const favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    const contenedor = document.getElementById("favoritos");
+
+    contenedor.innerHTML = "";
+
+    favoritos.forEach(poke => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <p>${poke.name}</p>
+            <img src="${poke.img}">
+            <button class="btnEliminar" onclick="deleteFavorite('${poke.name}')">Eliminar</button>
+        `;
+        contenedor.appendChild(div);
+    });
+}
+// Cargar favoritos al iniciar
+updateFavoritesList();
